@@ -36,4 +36,8 @@ public class AccountController {
         service.delete(id);
     }
 
+    @PostMapping("/transfer")
+    public void transfer(@RequestParam Long from, @RequestParam Long to, @RequestParam Double amount) {
+        service.transfer(from, to, amount);
+    }
 }
