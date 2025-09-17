@@ -4,14 +4,14 @@ public class Main {
     public static void main(String[] args) {
         // Criando clientes
         Cliente cliente1 = new Cliente("Rodrigo Scharp", "123.456.789-00");
-        Cliente cliente2 = new Cliente("Gatinha do Job", "987.654.321-00");
+        Cliente cliente2 = new Cliente("Agiota", "987.654.321-00");
 
         // Criando contas
         Conta conta1 = new Conta(cliente1);
         Conta conta2 = new Conta(cliente2);
 
         // Criando banco
-        Banco banco = new Banco("Banco Scharp");
+        Banco banco = new Banco("Scharp´s Bank");
         banco.adicionarConta(conta1);
         banco.adicionarConta(conta2);
 
