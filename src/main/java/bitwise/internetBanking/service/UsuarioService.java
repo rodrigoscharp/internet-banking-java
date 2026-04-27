@@ -4,10 +4,9 @@ import bitwise.internetBanking.model.Usuario;
 import bitwise.internetBanking.repository.UsuarioRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-
 import java.util.Optional;
 
 @Service
@@ -21,10 +20,12 @@ public class UsuarioService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional(readOnly = true)
     public List<Usuario> listarTodos() {
         return repository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Optional<Usuario> findById(Long id) {
         return repository.findById(id);
     }

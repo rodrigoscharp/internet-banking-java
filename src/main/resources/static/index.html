@@ -1,34 +1,356 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internet Banking</title>
-    <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitwise Banking</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-    <nav>
-        <div class="logo">💳 InternetBanking</div>
-        <ul>
-            <li><a href="#">Início</a></li>
-            <li><a href="#">Contas</a></li>
-            <li><a href="#">Transferências</a></li>
-            <li><a href="#">Perfil</a></li>
-        </ul>
-    </nav>
-</header>
 
-<main>
-    <section class="hero">
-        <h1>Bem-vindo ao seu Internet Banking</h1>
-        <p>Gerencie suas contas, faça transferências e acompanhe seu saldo de forma simples e segura.</p>
-        <a href="#" class="btn">Acessar Conta</a>
+<!-- ── SIDEBAR ─────────────────────────────── -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="5" width="20" height="14" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+    </div>
+    <span class="brand-name">Bitwise</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <p class="nav-label">Menu</p>
+    <a href="#" class="nav-link active" data-section="dashboard">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      <span>Dashboard</span>
+    </a>
+    <a href="#" class="nav-link" data-section="usuarios">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Usuários</span>
+    </a>
+    <a href="#" class="nav-link" data-section="contas">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+      <span>Contas</span>
+    </a>
+
+    <p class="nav-label mt">Operações</p>
+    <a href="#" class="nav-link" data-section="transacoes" data-tab="deposito">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      <span>Depósito</span>
+    </a>
+    <a href="#" class="nav-link" data-section="transacoes" data-tab="saque">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      <span>Saque</span>
+    </a>
+    <a href="#" class="nav-link" data-section="transacoes" data-tab="transferencia">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+      <span>Transferência</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="su-avatar">B</div>
+      <div class="su-info">
+        <strong>Bitwise Bank</strong>
+        <small>Sistema v1.0</small>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ── MAIN WRAPPER ────────────────────────── -->
+<div class="main-wrapper">
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <button class="menu-btn" id="menu-btn" onclick="toggleSidebar()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="topbar-right">
+      <button class="topbar-icon" onclick="refreshPage()" title="Atualizar dados">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ══ CONTEÚDO ══════════════════════════════ -->
+  <main class="content">
+
+    <!-- ── DASHBOARD ───────────────────────── -->
+    <section id="section-dashboard" class="section active">
+
+      <div class="page-title">
+        <h1>Dashboard</h1>
+        <p>Visão geral do sistema bancário</p>
+      </div>
+
+      <!-- Hero card -->
+      <div class="hero-card">
+        <div class="hero-card-bg"></div>
+        <div class="hero-left">
+          <p class="hero-label">Patrimônio Total</p>
+          <h2 class="hero-amount" id="stat-saldo">—</h2>
+          <div class="hero-badges">
+            <span class="hbadge"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> <span id="stat-usuarios">—</span> usuários</span>
+            <span class="hbadge"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg> <span id="stat-contas">—</span> contas</span>
+          </div>
+        </div>
+        <div class="hero-card-graphic">
+          <div class="graphic-circle c1"></div>
+          <div class="graphic-circle c2"></div>
+          <div class="graphic-circle c3"></div>
+        </div>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="section-label">Ações rápidas</div>
+      <div class="quick-grid">
+        <button class="qcard" onclick="navigate('usuarios')">
+          <div class="qcard-icon" style="background:var(--blue-lt);color:var(--blue)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <span class="qcard-label">Novo usuário</span>
+          <svg class="qcard-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <button class="qcard" onclick="navigate('contas')">
+          <div class="qcard-icon" style="background:var(--purple-lt);color:var(--purple)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          </div>
+          <span class="qcard-label">Nova conta</span>
+          <svg class="qcard-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <button class="qcard" onclick="navigate('transacoes','deposito')">
+          <div class="qcard-icon" style="background:var(--green-lt);color:var(--green)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          </div>
+          <span class="qcard-label">Depositar</span>
+          <svg class="qcard-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <button class="qcard" onclick="navigate('transacoes','saque')">
+          <div class="qcard-icon" style="background:var(--orange-lt);color:var(--orange)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          </div>
+          <span class="qcard-label">Sacar</span>
+          <svg class="qcard-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <button class="qcard" onclick="navigate('transacoes','transferencia')">
+          <div class="qcard-icon" style="background:var(--pink-lt);color:var(--pink)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </div>
+          <span class="qcard-label">Transferir</span>
+          <svg class="qcard-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+
+      <!-- Contas recentes -->
+      <div class="section-label">Contas recentes</div>
+      <div class="card" id="dashboard-contas">
+        <div class="loading-state"><div class="spinner"></div><span>Carregando...</span></div>
+      </div>
+
     </section>
-</main>
 
-<footer>
-    <p>© 2025 - Bitwise Internet Banking</p>
-</footer>
+    <!-- ── USUÁRIOS ─────────────────────────── -->
+    <section id="section-usuarios" class="section">
+      <div class="page-title">
+        <h1>Usuários</h1>
+        <p>Cadastre e consulte os titulares de conta</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head"><h3>Novo usuário</h3></div>
+          <form id="form-usuario" onsubmit="criarUsuario(event)" autocomplete="off">
+            <div class="field">
+              <label>Nome completo</label>
+              <div class="input-wrap">
+                <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <input type="text" id="u-nome" placeholder="João Silva" required>
+              </div>
+            </div>
+            <div class="field">
+              <label>E-mail</label>
+              <div class="input-wrap">
+                <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <input type="email" id="u-email" placeholder="joao@email.com" required>
+              </div>
+            </div>
+            <div class="field">
+              <label>Senha</label>
+              <div class="input-wrap">
+                <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input type="password" id="u-senha" placeholder="Mínimo 6 caracteres" minlength="6" required>
+                <button type="button" class="eye-btn" onclick="togglePwd('u-senha',this)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-full" id="btn-criar-usuario">Criar usuário</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>Usuários cadastrados</h3>
+            <button class="btn-ghost" onclick="carregarUsuarios()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              Atualizar
+            </button>
+          </div>
+          <div id="lista-usuarios"><div class="loading-state"><div class="spinner"></div><span>Carregando...</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTAS ───────────────────────────── -->
+    <section id="section-contas" class="section">
+      <div class="page-title">
+        <h1>Contas</h1>
+        <p>Gerencie as contas bancárias</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head"><h3>Nova conta</h3></div>
+          <form id="form-conta" onsubmit="criarConta(event)" autocomplete="off">
+            <div class="field">
+              <label>Titular</label>
+              <div class="input-wrap">
+                <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <select id="c-usuario" required><option value="">Selecione um usuário…</option></select>
+              </div>
+            </div>
+            <div class="field">
+              <label>Saldo inicial</label>
+              <div class="input-wrap">
+                <span class="input-prefix">R$</span>
+                <input type="number" id="c-saldo" placeholder="0,00" min="0" step="0.01" value="0" class="has-prefix">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-full" id="btn-criar-conta">Criar conta</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>Contas ativas</h3>
+            <button class="btn-ghost" onclick="carregarContas()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              Atualizar
+            </button>
+          </div>
+          <div id="lista-contas"><div class="loading-state"><div class="spinner"></div><span>Carregando...</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TRANSAÇÕES ───────────────────────── -->
+    <section id="section-transacoes" class="section">
+      <div class="page-title">
+        <h1>Transações</h1>
+        <p>Realize operações financeiras com segurança</p>
+      </div>
+
+      <div class="tx-tabs">
+        <button class="tx-tab active" data-tab="deposito" onclick="showTab('deposito')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          Depósito
+        </button>
+        <button class="tx-tab" data-tab="saque" onclick="showTab('saque')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          Saque
+        </button>
+        <button class="tx-tab" data-tab="transferencia" onclick="showTab('transferencia')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          Transferência
+        </button>
+      </div>
+
+      <!-- Depósito -->
+      <div id="tab-deposito" class="tx-panel card">
+        <div class="tx-panel-header green">
+          <div class="tx-panel-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
+          <div><h3>Depósito</h3><p>Adicione saldo a uma conta</p></div>
+        </div>
+        <form onsubmit="realizarDeposito(event)">
+          <div class="field"><label>Conta destino</label>
+            <div class="input-wrap"><svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><select id="dep-conta" required><option value="">Selecione uma conta…</option></select></div>
+          </div>
+          <div class="field"><label>Valor</label>
+            <div class="input-wrap"><span class="input-prefix">R$</span><input type="number" id="dep-valor" placeholder="0,00" min="0.01" step="0.01" required class="has-prefix"></div>
+          </div>
+          <button type="submit" class="btn btn-success w-full">Confirmar depósito</button>
+        </form>
+      </div>
+
+      <!-- Saque -->
+      <div id="tab-saque" class="tx-panel card" style="display:none">
+        <div class="tx-panel-header orange">
+          <div class="tx-panel-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
+          <div><h3>Saque</h3><p>Retire saldo de uma conta</p></div>
+        </div>
+        <form onsubmit="realizarSaque(event)">
+          <div class="field"><label>Conta</label>
+            <div class="input-wrap"><svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><select id="saq-conta" required><option value="">Selecione uma conta…</option></select></div>
+          </div>
+          <div class="field"><label>Valor</label>
+            <div class="input-wrap"><span class="input-prefix">R$</span><input type="number" id="saq-valor" placeholder="0,00" min="0.01" step="0.01" required class="has-prefix"></div>
+          </div>
+          <button type="submit" class="btn btn-danger w-full">Confirmar saque</button>
+        </form>
+      </div>
+
+      <!-- Transferência -->
+      <div id="tab-transferencia" class="tx-panel card" style="display:none">
+        <div class="tx-panel-header blue">
+          <div class="tx-panel-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+          <div><h3>Transferência</h3><p>Mova saldo entre contas</p></div>
+        </div>
+        <form onsubmit="realizarTransferencia(event)">
+          <div class="transfer-row">
+            <div class="field" style="flex:1"><label>Origem</label>
+              <div class="input-wrap"><svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><select id="trf-origem" required><option value="">Selecione…</option></select></div>
+            </div>
+            <div class="arrow-sep">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+            <div class="field" style="flex:1"><label>Destino</label>
+              <div class="input-wrap"><svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><select id="trf-destino" required><option value="">Selecione…</option></select></div>
+            </div>
+          </div>
+          <div class="field"><label>Valor</label>
+            <div class="input-wrap"><span class="input-prefix">R$</span><input type="number" id="trf-valor" placeholder="0,00" min="0.01" step="0.01" required class="has-prefix"></div>
+          </div>
+          <button type="submit" class="btn btn-primary w-full">Confirmar transferência</button>
+        </form>
+      </div>
+    </section>
+
+  </main><!-- /content -->
+</div><!-- /main-wrapper -->
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<!-- Modal -->
+<div id="modal-overlay" class="modal-overlay" style="display:none" onclick="overlayClick(event)">
+  <div class="modal">
+    <div class="modal-icon-wrap" id="modal-icon-wrap">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </div>
+    <h3 id="modal-title">Confirmar ação</h3>
+    <p id="modal-message"></p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost-full" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-danger" id="modal-confirm">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
